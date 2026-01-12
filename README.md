@@ -234,10 +234,5 @@ The RUL decay plot for Engine Unit #10 illustrates the linear degradation patter
 
 This project is designed for research and educational purposes. Please refer to NASA's dataset licensing terms for commercial use.
 
-## Author
-
-Principal ML Engineer - Sentinel-X Development Team
-
----
 
 **Sentinel-X**: *Predicting failures before they happen. Deep insights. Economic impact.*
