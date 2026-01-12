@@ -136,6 +136,74 @@ The system generates:
    - `shap_summary_plot.png`: Feature importance and interpretability
    - `rul_decay_plot.png`: Sample engine unit RUL degradation over time
 
+## Results
+
+### Model Performance Metrics
+
+The Sentinel-X model achieved the following performance on the NASA C-MAPSS FD001 test set:
+
+| Metric | Value |
+|--------|-------|
+| **F1-Score** | 0.7701 |
+| **Precision** | 0.7493 |
+| **Recall (Critical)** | 0.7922 |
+| **Best CV F1-Score** | 0.8959 |
+
+**Optimal Hyperparameters:**
+- `learning_rate`: 0.1
+- `max_depth`: 5
+- `scale_pos_weight`: 5.66 (automatically calculated for class imbalance)
+
+### Training Statistics
+
+- **Training Data**: 20,631 cycles across 100 engine units
+- **Test Data**: 13,096 cycles across 100 engine units
+- **Training Cases**: 3,100 failure cases, 17,531 healthy cases
+- **Test Cases**: 332 failure cases, 12,764 healthy cases
+- **Constant Sensors Removed**: s_1, s_5, s_10, s_16, s_18, s_19
+- **Total Features**: 75 (after feature engineering)
+
+### Economic Impact Analysis
+
+The Sentinel-X system demonstrates significant cost savings compared to a traditional "Run-to-Failure" strategy:
+
+| Metric | Value |
+|--------|-------|
+| **True Positives (Caught Failures)** | 263 |
+| **False Negatives (Missed Failures)** | 69 |
+| **False Positives (False Alarms)** | 88 |
+| **Sentinel-X Total Cost** | $7,662,000.00 |
+| **Run-to-Failure Total Cost** | $16,600,000.00 |
+| **Cost Saved (ROI)** | **$8,938,000.00** |
+| **ROI Percentage** | **53.84%** |
+
+**Cost Parameters:**
+- Unplanned Engine Failure: $50,000
+- Proactive Maintenance: $12,000
+
+### Visualizations
+
+#### Precision-Recall Curve
+
+The Precision-Recall curve demonstrates the trade-off between precision and recall, showing that Sentinel-X maintains high precision (>0.75) even at recall values above 0.8, which is critical for maintenance applications where false alarms are costly.
+
+![Precision-Recall Curve](precision_recall_curve.png)
+
+#### SHAP Summary Plot
+
+The SHAP summary plot identifies the primary "pulses" of failure by showing which sensor readings and their rolling statistics are most influential in predicting engine failure. Key features include:
+- `s_3_rolling_mean_10` and `s_15_rolling_mean_10` show the strongest impact
+- Rolling statistics (mean and std) for windows of 10 and 25 cycles are highly predictive
+- Higher feature values (red) generally correlate with failure predictions
+
+![SHAP Summary Plot](shap_summary_plot.png)
+
+#### RUL Decay Plot
+
+The RUL decay plot for Engine Unit #10 illustrates the linear degradation pattern and the critical failure threshold at RUL=30 cycles. This visualization helps maintenance teams understand when proactive maintenance should be scheduled.
+
+![RUL Decay Plot](rul_decay_plot.png)
+
 ## Key Technical Highlights
 
 ### Time-Series Integrity
